@@ -20,7 +20,7 @@ const features = [
     description: "Get to know each other better with our chat feature",
   },
 ];
-export default function Home() {
+export default async function Home() {
   return (
     <>
       <MaxWidthWrapper>
