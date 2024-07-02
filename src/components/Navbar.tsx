@@ -22,28 +22,29 @@ const Navbar = () => {
                 <div className="sm:flex sm:flex-1 sm:items-center sm:justify-end sm:space-x-4">
                   {" "}
                   {/*May change to hidden+lg*/}
-                  {user ? null : (
+                  {/* {user ? null : (
                     <Link
                       href="/sign-in"
-                      className={buttonVariants({ variant: "ghost" })}
+                      className={buttonVariants({
+                        variant: "ghost",
+                        className: "text-gray-900 hover:text-gray-900",
+                      })}
                     >
                       Log in
                     </Link>
-                  )}
-                  {user ? null : (
+                  )} */}
+                  {/* {user ? null : (
                     <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  )}
+                  )} */}
                   {user ? (
                     <p></p>
                   ) : (
                     <Link
                       href="/sign-up"
-                      className={cn(
-                        buttonVariants({
-                          variant: "ghost",
-                        }),
-                        "text-rose-600 hover:text-rose-600"
-                      )}
+                      className={buttonVariants({
+                        variant: "ghost",
+                        className: "text-rose-600 hover:text-rose-600",
+                      })}
                     >
                       Sign up
                     </Link>
