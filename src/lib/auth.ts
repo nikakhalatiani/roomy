@@ -3,8 +3,7 @@ import { UpstashRedisAdapter } from "@next-auth/upstash-redis-adapter";
 import { db } from "@/lib/db";
 import GoogleProvider from "next-auth/providers/google";
 import AzureADProvider from "next-auth/providers/azure-ad";
-
-
+import { cookies } from "next/headers";
 
 function getGoogleCredentials() {
   const clientId = process.env.GOOGLE_CLIENT_ID;
@@ -43,7 +42,8 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   pages: {
-    signIn: "/sign-up",
+    signIn: "/auth/sign-up",
+    error: "/auth/error", // Redirect to an error page if needed
   },
   providers: [
     GoogleProvider({
@@ -57,6 +57,16 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
+    async signIn({ user }) {
+      const email = user.email as string;
+      if (email.endsWith("@kiu.edu.ge")) {
+        return true;
+      } else {
+        // account!.access_token = undefined;
+        // account!.expires_at = Date.now();
+        throw new Error(`Access denied: Only @kiu.edu.ge emails are allowed.`);
+      }
+    },
     async jwt({ token, user }) {
       const dbUser = (await db.get(`user:${token.id}`)) as User | null;
       if (!dbUser) {

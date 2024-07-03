@@ -1,7 +1,9 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import Navbar from "@/components/Navbar";
 import { buttonVariants } from "@/components/ui/button";
+import { authOptions } from "@/lib/auth";
 import { CircleUserRound, SearchCheck, MessageCircle } from "lucide-react";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
 
 const features = [
@@ -22,6 +24,7 @@ const features = [
   },
 ];
 export default async function Home() {
+  const session = await getServerSession(authOptions);
   return (
     <>
       <Navbar />
@@ -36,7 +39,7 @@ export default async function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 mt-6">
             <Link
-              href="/browse"
+              href={session ? "/browse" : "/auth/sign-up"}
               className={buttonVariants({ variant: "default", size: "lg" })}
             >
               <span className="text-base">Look for People</span>

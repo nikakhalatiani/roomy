@@ -37,13 +37,19 @@ const Page = () => {
                 className={cn("w-32 h-32", load ? "animate-spin-slow" : "")}
               />
             </Link>
-            <h1 className="text-2xl font-bold">Create an account</h1>
-            {/* <Link
+            <h1 className="text-2xl font-bold">
+              Join <span className="text-rose-600">roomy</span> right now
+            </h1>
+          
+            <p className="mt-6 text-lg max-w-prose text-muted-foreground underline">
+              Use your KIU student email only{" "}
+            </p>
+              {/* <Link
               className={buttonVariants({
                 variant: "link",
                 className: "gap-1",
               })}
-              href="/sign-in"
+              href="/auth/sign-in"
             >
               Already have an account? Log-in
               <ArrowRight className="w-4 h-4" />

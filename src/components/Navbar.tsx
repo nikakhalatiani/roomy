@@ -2,10 +2,11 @@ import Link from "next/link";
 import MaxWidthWrapper from "./MaxWidthWrapper";
 import { Icons } from "./Icons";
 import { buttonVariants } from "./ui/button";
-import { cn } from "@/lib/utils";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
-const Navbar = () => {
-  const user = null;
+const Navbar = async () => {
+  const session = await getServerSession(authOptions);
   return (
     <div className="bg-white sticky z-50 top-0 inset-x-0 h-16">
       <header className="relative bg-white">
@@ -24,7 +25,7 @@ const Navbar = () => {
                   {/*May change to hidden+lg*/}
                   {/* {user ? null : (
                     <Link
-                      href="/sign-in"
+                      href="/auth/sign-in"
                       className={buttonVariants({
                         variant: "ghost",
                         className: "text-gray-900 hover:text-gray-900",
@@ -36,14 +37,14 @@ const Navbar = () => {
                   {/* {user ? null : (
                     <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                   )} */}
-                  {user ? (
+                  {session ? (
                     <p></p>
                   ) : (
                     <Link
-                      href="/sign-up"
+                      href="/auth/sign-up"
                       className={buttonVariants({
                         variant: "ghost",
-                        className: "text-rose-600 hover:text-rose-600",
+                        className: "text-gray-900 hover:text-rose-600",
                       })}
                     >
                       Sign up
