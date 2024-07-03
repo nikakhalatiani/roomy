@@ -32,7 +32,7 @@ export default async function Home() {
       <MaxWidthWrapper>
         <div className="py-20 mx-auto text-center flex flex-col items-center max-w-3xl">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            Welcome to <span className="text-rose-600">Roomy</span>!
+            Welcome to <span className="text-rose-600">roomy</span>!
           </h1>
           <p className="mt-6 text-lg max-w-prose text-muted-foreground">
             Find a roommate who shares your lifestyle{" "}

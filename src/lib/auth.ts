@@ -1,24 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import { UpstashRedisAdapter } from "@next-auth/upstash-redis-adapter";
 import { db } from "@/lib/db";
-import GoogleProvider from "next-auth/providers/google";
 import AzureADProvider from "next-auth/providers/azure-ad";
-import { cookies } from "next/headers";
-
-function getGoogleCredentials() {
-  const clientId = process.env.GOOGLE_CLIENT_ID;
-  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-
-  if (!clientId || clientId.length === 0) {
-    throw new Error("Missing GOOGLE_CLIENT_ID");
-  }
-
-  if (!clientSecret || clientSecret.length === 0) {
-    throw new Error("Missing GOOGLE_CLIENT_SECRET");
-  }
-
-  return { clientId, clientSecret };
-}
 
 function getAzureCredentials() {
   const clientId = process.env.NEXT_PUBLIC_AZURE_AD_CLIENT_ID;
@@ -46,10 +29,6 @@ export const authOptions: NextAuthOptions = {
     error: "/auth/error", // Redirect to an error page if needed
   },
   providers: [
-    GoogleProvider({
-      clientId: getGoogleCredentials().clientId,
-      clientSecret: getGoogleCredentials().clientSecret,
-    }),
     AzureADProvider({
       clientId: getAzureCredentials().clientId,
       clientSecret: getAzureCredentials().clientSecret,
@@ -59,7 +38,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user }) {
       const email = user.email as string;
-      if (email.endsWith("@kiu.edu.ge")) {
+      if (email.endsWith("@kiu.edu.ge") || email === "tt6245006@gmail.com") {
         return true;
       } else {
         // account!.access_token = undefined;
