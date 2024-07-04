@@ -26,7 +26,7 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: "/auth/sign-up",
-    error: "/auth/error", // Redirect to an error page if needed
+    error: "/auth/error",
   },
   providers: [
     AzureADProvider({
@@ -41,8 +41,6 @@ export const authOptions: NextAuthOptions = {
       if (email.endsWith("@kiu.edu.ge") || email === "tt6245006@gmail.com") {
         return true;
       } else {
-        // account!.access_token = undefined;
-        // account!.expires_at = Date.now();
         throw new Error(`Access denied: Only @kiu.edu.ge emails are allowed.`);
       }
     },

@@ -13,7 +13,6 @@ const Navbar = async () => {
         <MaxWidthWrapper>
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center">
-              {/*TODO: Mobile */}
               <div className="ml-4 flex lg:ml-0">
                 <Link href="/">
                   <Icons.logo className="h-16 w-16" />
@@ -21,22 +20,6 @@ const Navbar = async () => {
               </div>
               <div className="ml-auto flex items-center">
                 <div className="sm:flex sm:flex-1 sm:items-center sm:justify-end sm:space-x-4">
-                  {" "}
-                  {/*May change to hidden+lg*/}
-                  {/* {user ? null : (
-                    <Link
-                      href="/auth/sign-in"
-                      className={buttonVariants({
-                        variant: "ghost",
-                        className: "text-gray-900 hover:text-gray-900",
-                      })}
-                    >
-                      Log in
-                    </Link>
-                  )} */}
-                  {/* {user ? null : (
-                    <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  )} */}
                   {session ? (
                     <p></p>
                   ) : (

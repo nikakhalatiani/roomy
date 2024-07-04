@@ -34,16 +34,6 @@ const Page = () => {
             <p className="mt-6 text-base max-w-prose text-muted-foreground">
               Use your KIU student email only{" "}
             </p>
-            {/* <Link
-              className={buttonVariants({
-                variant: "link",
-                className: "gap-1",
-              })}
-              href="/auth/sign-in"
-            >
-              Already have an account? Log-in
-              <ArrowRight className="w-4 h-4" />
-            </Link> */}
             <div className="flex flex-col sm:flex-col gap-4 mt-6">
               <Button
                 className={buttonVariants({
