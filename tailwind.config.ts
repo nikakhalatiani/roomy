@@ -52,6 +52,28 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        answerBad: {
+          500: "#f43f5e",
+        },
+        answerGood: {
+          500: "#82D350",
+        },
+        grey: {
+          500: "#6A6A6A",
+        },
+        blue: {
+          500: "#051B71",
+        },
+        green: {
+          300: "#D3E0BE",
+          800: "#5c7537",
+          900: "#34441c",
+        },
+        gameSwipe: {
+          left: "#f46e85",
+          neutral: "#fafafa",
+          right: "#91d369",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
