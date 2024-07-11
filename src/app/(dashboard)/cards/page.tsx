@@ -6,7 +6,7 @@ import { useBrowseContext } from "@/store/browseContext";
 import { useEffect } from "react";
 import { getInitialBrowse } from "../../../api/browse.api";
 import { user as initialUser } from "../../../api/user.api";
-import GameCards from "./_components/GameCards";
+import BrowseCards from "./_components/BrowseCards";
 import BrowseCompletion from "./_components/BrowseCompletion";
 
 const Game = () => {
@@ -47,7 +47,7 @@ const Game = () => {
             animate="animate"
             exit="exit"
           >
-            <GameCards />
+            <BrowseCards />
           </motion.div>
         ) : (
           <div key="gameScreen2" id="gameCompletion">
