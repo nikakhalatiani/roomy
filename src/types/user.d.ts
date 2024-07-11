@@ -1,5 +1,4 @@
 export interface User {
-    score: number;
-    previousScore: number;
+    matches: number;
   }
   

@@ -1,8 +1,6 @@
 import { motion } from "framer-motion";
-
-import { IsDragOffBoundary } from "@/types/game";
+import { IsDragOffBoundary } from "@/types/browse";
 import { X, Heart } from "lucide-react";
-
 
 const actionPropsMatrix = {
   left: {
@@ -27,7 +25,7 @@ type Props = {
   onClick: () => void;
 };
 
-const GameActionBtn = ({
+const BrowseActionBtn = ({
   scale,
   direction,
   isDragOffBoundary = null,
@@ -53,4 +51,4 @@ const GameActionBtn = ({
   );
 };
 
-export default GameActionBtn;
+export default BrowseActionBtn;

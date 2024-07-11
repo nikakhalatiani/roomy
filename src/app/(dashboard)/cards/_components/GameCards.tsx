@@ -1,41 +1,40 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-"use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 
-import { useGameContext } from "@/store/gameContext";
+import { useBrowseContext } from "@/store/browseContext";
 import { useUserContext } from "@/store/userContext";
-import handleScore from "../_utils/handleScore";
-
-import { easeOutExpo } from "@/lib/easings.data";
-import GameCard from "./GameCard";
-import GameActionBtn from "./GameActionBtn";
-import { CardSwipeDirection, IsDragOffBoundary } from "@/types/game";
+import handleMatches from "../_utils/handleMatches";
+import BrowseCard from "./BrowseCard";
+import BrowseActionBtn from "./BrowseActionBtn";
+import { CardSwipeDirection, IsDragOffBoundary } from "@/types/browse";
 import { themeColors } from "@/lib/theme";
-import { Icons } from "@/components/Icons";
 
 const initialDrivenProps = {
   cardWrapperX: 0,
   buttonScaleBadAnswer: 1,
   buttonScaleGoodAnswer: 1,
-  mainBgColor: themeColors.gameSwipe.neutral,
+  mainBgColor: themeColors.browseSwipe.neutral,
 };
 
-const GameCards = () => {
-  const [user, setUser] = useUserContext();
-  const [game, setGame] = useGameContext();
+// const easeInExpo = [0.7, 0, 0.84, 0];
+const easeOutExpo = [0.16, 1, 0.3, 1];
+// const easeInOutExpo = [0.87, 0, 0.13, 1];
 
-  const { score } = user;
-  const { cards } = game;
+const BrowseCards = () => {
+  const [user, setUser] = useUserContext();
+  const [browse, setBrowse] = useBrowseContext();
+
+  const { matches } = user;
+  const { cards } = browse;
 
   const [direction, setDirection] = useState<CardSwipeDirection | "">("");
   const [isDragOffBoundary, setIsDragOffBoundary] =
     useState<IsDragOffBoundary>(null);
   const [cardDrivenProps, setCardDrivenProps] = useState(initialDrivenProps);
-  const [isDragging, setIsDragging] = useState(false);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
 
   const handleActionBtnOnClick = (btn: CardSwipeDirection) => {
     setDirection(btn);
@@ -43,13 +42,12 @@ const GameCards = () => {
 
   useEffect(() => {
     if (["left", "right"].includes(direction)) {
-      setGame({
-        ...game,
-        cards: game.cards.slice(0, -1),
+      setBrowse({
+        ...browse,
+        cards: browse.cards.slice(0, -1),
       });
       setUser({
-        score: handleScore({ direction, score, cards }),
-        previousScore: score,
+        matches: handleMatches({ direction, matches, cards }),
       });
     }
 
@@ -64,9 +62,10 @@ const GameCards = () => {
       transition: { duration: 0.3, ease: easeOutExpo },
     },
     upcoming: {
-      opacity: 0.5,
+      opacity: 0.3,
       y: 67,
       scale: 0.9,
+      x: 33,
       transition: { duration: 0.3, ease: easeOutExpo, delay: 0 },
     },
     remainings: {
@@ -91,19 +90,18 @@ const GameCards = () => {
       style={{
         backgroundColor: cardDrivenProps.mainBgColor,
         backgroundImage: 'url("/svg/background.svg")',
-        backgroundSize: "120px 120px", // Adjust the size as needed
+        backgroundSize: "120px 120px",
       }}
     >
-
       <Link
-        href="/"
+        href="/chats"
         className="absolute top-[20px] right-[20px] w-[30px] h-auto"
       >
         <X className="text-muted-foreground w-full h-full" />
       </Link>
 
       <div
-        id="gameUIWrapper"
+        id="browseUIWrapper"
         className="flex flex-col gap-6 w-full items-center justify-center relative z-10"
       >
         <div
@@ -126,13 +124,12 @@ const GameCards = () => {
                   }
                   exit="exit"
                 >
-                  <GameCard
+                  <BrowseCard
                     data={card}
                     id={card.id}
                     setCardDrivenProps={setCardDrivenProps}
                     setIsDragging={setIsDragging}
                     isDragging={isDragging}
-                    isLast={isLast}
                     setIsDragOffBoundary={setIsDragOffBoundary}
                     setDirection={setDirection}
                   />
@@ -145,14 +142,14 @@ const GameCards = () => {
           id="actions"
           className="flex items-center justify-center w-full  gap-4 relative z-10"
         >
-          <GameActionBtn
+          <BrowseActionBtn
             direction="left"
             ariaLabel="swipe left"
             scale={cardDrivenProps.buttonScaleBadAnswer}
             isDragOffBoundary={isDragOffBoundary}
             onClick={() => handleActionBtnOnClick("left")}
           />
-          <GameActionBtn
+          <BrowseActionBtn
             direction="right"
             ariaLabel="swipe right"
             scale={cardDrivenProps.buttonScaleGoodAnswer}
@@ -165,4 +162,4 @@ const GameCards = () => {
   );
 };
 
-export default GameCards;
+export default BrowseCards;

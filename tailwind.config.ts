@@ -69,7 +69,7 @@ const config = {
           800: "#5c7537",
           900: "#34441c",
         },
-        gameSwipe: {
+        browseSwipe: {
           left: "#f46e85",
           neutral: "#fafafa",
           right: "#91d369",

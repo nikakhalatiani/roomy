@@ -42,7 +42,7 @@ export default async function Home() {
               href={session ? "/browse" : "/auth/sign-up"}
               className={buttonVariants({ variant: "default", size: "lg" })}
             >
-              <span className="text-base">Look for People</span>
+              <span className="text-lg">Look for People</span>
             </Link>
           </div>
         </div>

@@ -2,18 +2,18 @@
 import { motion, AnimatePresence, cubicBezier } from "framer-motion";
 
 import { useUserContext } from "@/store/userContext";
-import { useGameContext } from "@/store/gameContext";
+import { useBrowseContext } from "@/store/browseContext";
 import { useEffect } from "react";
-import { getInitialGame } from "../../../api/games.api";
-import { user as initialUser} from "../../../api/user.api";
+import { getInitialBrowse } from "../../../api/browse.api";
+import { user as initialUser } from "../../../api/user.api";
 import GameCards from "./_components/GameCards";
-import GameCompletion from "./_components/GameCompletion";
+import BrowseCompletion from "./_components/BrowseCompletion";
 
 const Game = () => {
-  const [game, setGame] = useGameContext();
+  const [game, setGame] = useBrowseContext();
   const [_, setUser] = useUserContext();
 
-  const initialGame = getInitialGame(0);
+  const initialGame = getInitialBrowse(0);
 
   useEffect(() => {
     setUser(initialUser);
@@ -36,7 +36,7 @@ const Game = () => {
   };
 
   return (
-    <main className="min-h-screen h-full mx-auto bg-gameSwipe-neutral">
+    <main className="min-h-screen h-full mx-auto bg-gameSwipe-neutral overflow-hidden">
       <AnimatePresence mode="wait">
         {!isCardStockEmpty ? (
           <motion.div
@@ -50,16 +50,9 @@ const Game = () => {
             <GameCards />
           </motion.div>
         ) : (
-          <motion.div
-            key="gameScreen2"
-            id="gameCompletion"
-            variants={gameScreenVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-          >
-            <GameCompletion />
-          </motion.div>
+          <div key="gameScreen2" id="gameCompletion">
+            <BrowseCompletion />
+          </div>
         )}
       </AnimatePresence>
     </main>

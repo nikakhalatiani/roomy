@@ -3,10 +3,10 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import UserProvider from "@/store/userContext";
-import GameProvider from "@/store/gameContext";
+import GameProvider from "@/store/browseContext";
 
 import { getUser } from "@/api/user.api";
-import { getGame } from "@/api/games.api";
+import { getBrowse } from "@/api/browse.api";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +21,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const user = await getUser();
-  const game = await getGame(0);
+  const game = await getBrowse(0);
 
   return (
     <html lang="en" className="h-full">
@@ -29,7 +29,7 @@ export default async function RootLayout({
         className={cn("relative h-full text-sans antialiased", inter.className)}
       >
         <UserProvider user={user}>
-          <GameProvider game={game}>
+          <GameProvider browse={game}>
             {
               <main className="relative flex flex-col min-h-screen">
                 <div className="flex-grow flex-1">{children}</div>

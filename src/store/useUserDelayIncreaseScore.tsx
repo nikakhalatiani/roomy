@@ -7,14 +7,12 @@ type Props = {
 };
 
 const useDelayedIncreasedScore = ({ user, setUser }: Props) => {
-  const { score, previousScore } = user;
+  const { score, } = user;
   useEffect(() => {
     let userUpdateTimeOut: string | number | NodeJS.Timeout | undefined;
-    if (score !== previousScore) {
-      userUpdateTimeOut = setTimeout(() => {
-        setUser((state) => ({ ...state, previousScore: score }));
-      }, 500);
-    }
+    userUpdateTimeOut = setTimeout(() => {
+      setUser((state) => ({ ...state, previousScore: score }));
+    }, 500);
 
     return () => {
       clearTimeout(userUpdateTimeOut);
