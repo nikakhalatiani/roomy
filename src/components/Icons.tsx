@@ -1,4 +1,4 @@
-import { LucideProps } from "lucide-react";
+import { LucideProps, Moon, Sun } from "lucide-react";
 
 export const Icons = {
   logo: (props: LucideProps) => (
@@ -8,5 +8,22 @@ export const Icons = {
         fill="#e4335a"
       />
     </svg>
+  ),
+  time: ({ isMorning }: { isMorning: boolean }) => (
+    <div className="flex flex-col items-end">
+      <p className="text-muted-foreground text-sm inline-flex">
+        {isMorning ? (
+          <>
+            <Sun className="h-4 w-4 mr-1 mt-0.5" />
+            Person
+          </>
+        ) : (
+          <>
+            <Moon className="h-4 w-4 mr-1 mt-0.5" />
+            Person
+          </>
+        )}
+      </p>
+    </div>
   ),
 };

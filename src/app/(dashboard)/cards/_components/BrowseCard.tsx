@@ -18,6 +18,7 @@ import { themeColors } from "@/lib/theme";
 
 import { type Card } from "@/types/browse";
 import { MousePointerClick, Sun, Moon } from "lucide-react";
+import { Icons } from "@/components/Icons";
 
 type Props = {
   id?: number;
@@ -95,7 +96,6 @@ const BrowseCard = ({
     console.log("Card clicked!");
     // May need to flip the card to show more details
   };
-
 
   return (
     <div onClick={handleClick}>
@@ -179,21 +179,7 @@ const BrowseCard = ({
                 </p>
               )}
             </div>
-            <div className="flex flex-col items-end">
-              <p className="text-muted-foreground text-sm inline-flex">
-                {data.morning ? (
-                  <>
-                    <Sun className="h-4 w-4 mr-1 mt-0.5" />
-                    Person
-                  </>
-                ) : (
-                  <>
-                    <Moon className="h-4 w-4 mr-1 mt-0.5" />
-                    Person
-                  </>
-                )}
-              </p>
-            </div>
+            <Icons.time isMorning={data.morning} />
           </div>
         </div>
         {/* <div className="flex mb-2 text-muted-foreground flex-col items-center">
@@ -201,7 +187,6 @@ const BrowseCard = ({
           <p className="text-sm text-muted-foreground">Click to read more</p>
         </div> */}
       </motion.div>
-
 
       <motion.div
         id={`cardDriverWrapper-${id}`}
