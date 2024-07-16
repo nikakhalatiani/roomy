@@ -134,7 +134,7 @@ const BrowseCard = ({
           <div
             id="imgPlaceholder"
             className="bg-browseSwipe-neutral absolute object-cover w-full h-full"
-          ></div>
+          />
           <Image
             priority
             className={`absolute object-cover object-center ${
