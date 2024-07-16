@@ -17,7 +17,7 @@ import { themeColors } from "@/lib/theme";
 // import { useUserContext } from "@/store/userContext";
 
 import { type Card } from "@/types/browse";
-import { MousePointerClick, Sun, Moon } from "lucide-react";
+import { MousePointerClick } from "lucide-react";
 import { Icons } from "@/components/Icons";
 
 type Props = {
