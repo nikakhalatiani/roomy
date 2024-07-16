@@ -91,8 +91,14 @@ const BrowseCard = ({
     }));
   });
 
+  const handleClick = () => {
+    console.log("Card clicked!");
+    // May need to flip the card to show more details
+  };
+
+
   return (
-    <>
+    <div onClick={handleClick}>
       <motion.div
         id={`cardDrivenWrapper-${id}`}
         className="absolute bg-gray-100 rounded-lg text-center w-full aspect-[100/140] pointer-events-none text-black origin-bottom drop-shadow-lg select-none"
@@ -134,7 +140,7 @@ const BrowseCard = ({
           <div
             id="imgPlaceholder"
             className="bg-browseSwipe-neutral absolute object-cover w-full h-full"
-          />
+          ></div>
           <Image
             priority
             className={`absolute object-cover object-center ${
@@ -196,6 +202,7 @@ const BrowseCard = ({
         </div> */}
       </motion.div>
 
+
       <motion.div
         id={`cardDriverWrapper-${id}`}
         className={`absolute w-full aspect-[100/140] ${
@@ -231,7 +238,7 @@ const BrowseCard = ({
         }}
         style={{ x }}
       ></motion.div>
-    </>
+    </div>
   );
 };
 
