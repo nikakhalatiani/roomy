@@ -42,7 +42,7 @@ export default async function Home() {
               href={session ? "/browse" : "/auth/sign-up"}
               className={buttonVariants({ variant: "default", size: "lg" })}
             >
-              <span className="text-base">Look for People</span>
+              <span className="text-lg">Look for People</span>
             </Link>
           </div>
         </div>
@@ -62,10 +62,10 @@ export default async function Home() {
                   </div>
                 </div>
                 <div className="mt-6 md:ml-4 md:mt-0 lg:ml-0 lg:mt-6">
-                  <h3 className="test-base font-medium text-gray-900">
+                  <h3 className="text-base font-medium text-gray-900">
                     {feature.name}
                   </h3>
-                  <p className="mt-3 test-sm text-muted-foreground">
+                  <p className="mt-3 text-sm text-muted-foreground">
                     {feature.description}
                   </p>
                 </div>
