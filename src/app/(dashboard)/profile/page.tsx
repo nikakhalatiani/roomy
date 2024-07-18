@@ -20,7 +20,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -33,49 +32,44 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useState } from "react";
-
-const PersonalDataValidator = z.object({
-  image: z.instanceof(File, { message: "Profile image is required" }),
-  username: z
-    .string({ required_error: "Your name is required" })
-    .min(1, { message: "Your name is required" })
-    .max(50, { message: "Name is too long" }),
-  dob: z.date({
-    required_error: "Date of birth is required",
-  }),
-  major: z.string({ required_error: "Your major is required" }),
-  year: z.string().optional(),
-  minor: z.string().optional(),
-  morningPerson: z.boolean().default(false),
-});
-
-type TPersonalDataValidator = z.infer<typeof PersonalDataValidator>;
+import {
+  TPersonalDataValidator,
+  PersonalDataValidator,
+} from "@/lib/validators/personal-data-validator";
+import axios, { AxiosError } from "axios";
+import { z } from "zod";
 
 const Page = () => {
   const form = useForm<TPersonalDataValidator>({
     resolver: zodResolver(PersonalDataValidator),
     defaultValues: {
-      morningPerson: false, // Set default value here
+      morningPerson: false,
+      minor: "",
+      year: "",
     },
   });
 
   const [load, setLoad] = useState<boolean>(false);
 
+  const addProfile = async (data: TPersonalDataValidator) => {
+    try {
+      await axios.post("/api/profile/add", data);
+      setLoad(true);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        form.setError("root", { message: error.message });
+        return;
+      }
+      if (error instanceof AxiosError) {
+        form.setError("root", { message: error.response?.data });
+        return;
+      }
+      form.setError("root", { message: "An error occurred" });
+    }
+  };
+
   const onSubmit = (data: TPersonalDataValidator) => {
-
-    setLoad(true);
-    const formData = new FormData();
-    formData.append("image", data.image as File);
-    formData.append("username", data.username);
-    formData.append("dob", data.dob.toISOString());
-    formData.append("major", data.major);
-    formData.append("year", data.year || "");
-    formData.append("minor", data.minor || "");
-    formData.append("morningPerson", data.morningPerson.toString());
-
-    // Process the form data as needed
-    console.log("Form Data", formData);
-    // You can use the formData object to send the data to your server or API
+    addProfile(data);
   };
 
   return (
@@ -83,17 +77,20 @@ const Page = () => {
       <div className="mx-auto flex w-full flex-col justify-center space-y-2 sm:w-[360px]">
         <div className="flex flex-col items-center text-center">
           <Icons.profileLogo
-            className={cn("w-20 h-20", load ? "" : "animate-pulse")}
+            className={cn(
+              "w-20 h-20",
+              load ? "" : "animate-bounce duration-550"
+            )}
           />
           <h1 className="text-2xl font-bold">
-            Create your <span className="text-rose-600">own</span> profile to
-            get started
+            Set up your <span className="text-rose-600">own</span> profile to
+            let others know you
           </h1>
         </div>
         <div className="grid gap-6">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="grid gap-2">
+              <div className="grid gap-2 mb-4">
                 <FormField
                   control={form.control}
                   name="image"
@@ -229,7 +226,11 @@ const Page = () => {
                             Year of Study
                           </FormLabel>
                           <FormControl>
-                            <Select {...field}>
+                            <Select
+                              value={field.value}
+                              onValueChange={(value) => field.onChange(value)}
+                            >
+                              {" "}
                               <SelectTrigger
                                 id="year"
                                 className="w-full text-muted-foreground focus:ring-transparent"
@@ -238,16 +239,16 @@ const Page = () => {
                               </SelectTrigger>
                               <SelectContent>
                                 <SelectGroup>
-                                  <SelectItem value="freshman">
+                                  <SelectItem value="Freshman">
                                     Freshman - 1st
                                   </SelectItem>
-                                  <SelectItem value="sophomore">
+                                  <SelectItem value="Sophomore">
                                     Sophomore - 2nd
                                   </SelectItem>
-                                  <SelectItem value="junior">
+                                  <SelectItem value="Junior">
                                     Junior - 3rd
                                   </SelectItem>
-                                  <SelectItem value="senior">
+                                  <SelectItem value="Senior">
                                     Senior - 4th
                                   </SelectItem>
                                 </SelectGroup>
@@ -311,7 +312,11 @@ const Page = () => {
                             Minor
                           </FormLabel>
                           <FormControl>
-                            <Select {...field}>
+                            <Select
+                              value={field.value}
+                              onValueChange={(value) => field.onChange(value)}
+                            >
+                              {" "}
                               <SelectTrigger className="w-full focus:ring-transparent text-muted-foreground">
                                 <SelectValue placeholder="Optional" />
                               </SelectTrigger>
@@ -324,6 +329,7 @@ const Page = () => {
                                     Management
                                   </SelectItem>
                                   <SelectItem value="Math">Math</SelectItem>
+                                  <SelectItem value="None">None yet</SelectItem>
                                 </SelectGroup>
                               </SelectContent>
                             </Select>
@@ -361,6 +367,16 @@ const Page = () => {
                     </FormItem>
                   )}
                 />
+
+                {load ? (
+                  <p className="text-sm text-emerald-500 flex justify-center font-bold">
+                    Data added successfully
+                  </p>
+                ) : (
+                  <p className="text-sm text-rose-600 flex justify-center font-bold">
+                    {form.formState.errors.root?.message}
+                  </p>
+                )}
                 <Button type="submit">Save Personal Info</Button>
               </div>
             </form>
