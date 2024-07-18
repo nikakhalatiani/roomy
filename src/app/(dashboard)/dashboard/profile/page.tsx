@@ -72,6 +72,11 @@ const Page = () => {
     addProfile(data);
   };
 
+  // Function to set load to false on form field change
+  const handleFieldChange = () => {
+    setLoad(false);
+  };
+
   return (
     <div className="container relative flex pt-20 flex-col items-center justify-center lg:px-0">
       <div className="mx-auto flex w-full flex-col justify-center space-y-2 sm:w-[360px]">
@@ -106,6 +111,7 @@ const Page = () => {
                           accept="image/*"
                           onChange={(e) => {
                             field.onChange(e.target.files?.[0] || null);
+                            handleFieldChange(); // Call to set load to false
                           }}
                           className={cn("focus-visible:ring-transparent", {
                             "border-rose-600": form.formState.errors.image,
@@ -139,6 +145,10 @@ const Page = () => {
                           id="username"
                           placeholder="Nikolai Khalatiani"
                           {...field}
+                          onChange={(e) => {
+                            field.onChange(e);
+                            handleFieldChange(); // Call to set load to false
+                          }}
                           className={cn("focus-visible:ring-transparent", {
                             "border-rose-600": form.formState.errors.username,
                           })}
@@ -197,9 +207,10 @@ const Page = () => {
                                 <Calendar
                                   mode="single"
                                   selected={field.value}
-                                  onSelect={(selectedDate) =>
-                                    field.onChange(selectedDate)
-                                  }
+                                  onSelect={(selectedDate) => {
+                                    field.onChange(selectedDate);
+                                    handleFieldChange(); // Call to set load to false
+                                  }}
                                   initialFocus
                                   fromYear={2000}
                                   toYear={2007}
@@ -228,7 +239,10 @@ const Page = () => {
                           <FormControl>
                             <Select
                               value={field.value}
-                              onValueChange={(value) => field.onChange(value)}
+                              onValueChange={(value) => {
+                                field.onChange(value);
+                                handleFieldChange(); // Call to set load to false
+                              }}
                             >
                               {" "}
                               <SelectTrigger
@@ -271,7 +285,10 @@ const Page = () => {
                           <FormControl>
                             <Select
                               value={field.value}
-                              onValueChange={(value) => field.onChange(value)}
+                              onValueChange={(value) => {
+                                field.onChange(value);
+                                handleFieldChange(); // Call to set load to false
+                              }}
                             >
                               <SelectTrigger
                                 id="major"
@@ -314,7 +331,10 @@ const Page = () => {
                           <FormControl>
                             <Select
                               value={field.value}
-                              onValueChange={(value) => field.onChange(value)}
+                              onValueChange={(value) => {
+                                field.onChange(value);
+                                handleFieldChange(); // Call to set load to false
+                              }}
                             >
                               {" "}
                               <SelectTrigger className="w-full focus:ring-transparent text-muted-foreground">
@@ -360,7 +380,10 @@ const Page = () => {
                           <Switch
                             id="morningPerson"
                             checked={field.value}
-                            onCheckedChange={field.onChange}
+                            onCheckedChange={(checked) => {
+                              field.onChange(checked);
+                              handleFieldChange(); // Call to set load to false
+                            }}
                           />
                         </div>
                       </FormControl>
