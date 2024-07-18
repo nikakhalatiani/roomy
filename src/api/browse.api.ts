@@ -12,7 +12,6 @@ export const cards: Browse[] = [
         illustration: "giorgi",
         age: 18,
         morning: true,
-        swiped: false,
       },
       {
         firstName: "Zura",
@@ -23,7 +22,6 @@ export const cards: Browse[] = [
         age: 21,
         minor: "MGMT",
         morning: false,
-        swiped: false,
       },
       {
         firstName: "Sandro",
@@ -31,10 +29,8 @@ export const cards: Browse[] = [
         program: "CS",
         year: "Senior",
         answer: "right",
-        illustration: "sandro",
         age: 22,
         morning: false,
-        swiped: false,
       },
     ],
   },
@@ -47,7 +43,7 @@ export const getBrowse = async (browseId: number): Promise<Browse> => {
 };
 
 export const getInitialBrowse = (browseId: number) => {
-  return { cards: reversedCards(cards[browseId].cards).filter((card) => card.swiped === false)};
+  return { cards: reversedCards(cards[browseId].cards)};
 };
 
 const reversedCards = (cards: Card[]) => {

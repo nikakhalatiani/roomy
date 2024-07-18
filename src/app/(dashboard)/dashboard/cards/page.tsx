@@ -4,8 +4,8 @@ import { motion, AnimatePresence, cubicBezier } from "framer-motion";
 import { useUserContext } from "@/store/userContext";
 import { useBrowseContext } from "@/store/browseContext";
 import { useEffect } from "react";
-import { getInitialBrowse } from "../../../api/browse.api";
-import { user as initialUser } from "../../../api/user.api";
+import { getInitialBrowse } from "../../../../api/browse.api";
+import { user as initialUser } from "../../../../api/user.api";
 import BrowseCards from "./_components/BrowseCards";
 import BrowseCompletion from "./_components/BrowseCompletion";
 

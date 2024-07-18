@@ -140,13 +140,15 @@ const BrowseCard = ({
           <div
             id="imgPlaceholder"
             className="bg-browseSwipe-neutral absolute object-cover w-full h-full"
-          ></div>
+          />
           <Image
             priority
             className={`absolute object-cover object-center ${
               imgLoadingComplete ? "opacity-100" : "opacity-0"
             } duration-500 ease-out`}
-            src={`/images/games/${data.illustration}.jpg`}
+            src={`/images/games/${
+              data.illustration ? data.illustration : `default`
+            }.jpg`}
             fill
             sizes={`(max-width: 768px) 100vw, 250px`}
             alt="car"

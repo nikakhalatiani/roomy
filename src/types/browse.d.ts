@@ -5,7 +5,7 @@ export type Browse = {
   export type Card = {
     id?: number;
     answer: "left" | "right" | null;
-    illustration: string;
+    illustration?: string;
     firstName: string;
     lastName: string;
     program: string;
@@ -13,7 +13,6 @@ export type Browse = {
     minor?: string;
     year?: string;
     morning: boolean;
-    swiped: boolean;
   };
   
   export type CardSwipeDirection = "left" | "right";
