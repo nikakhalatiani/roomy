@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
-
 import { useBrowseContext } from "@/store/browseContext";
 import { useUserContext } from "@/store/userContext";
 import handleMatches from "../_utils/handleMatches";
@@ -93,13 +91,6 @@ const BrowseCards = () => {
         backgroundSize: "120px 120px",
       }}
     >
-      <Link
-        href="/chats"
-        className="absolute top-[20px] right-[20px] w-[30px] h-auto"
-      >
-        <X className="text-muted-foreground w-full h-full" />
-      </Link>
-
       <div
         id="browseUIWrapper"
         className="flex flex-col gap-6 w-full items-center justify-center relative z-10"

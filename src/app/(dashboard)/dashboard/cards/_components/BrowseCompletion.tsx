@@ -17,7 +17,7 @@ const BrowseCompletion = () => {
         </h1>
         <div className="mt-8">
           <Link
-            href="/chats"
+            href="/dashboard/chats"
             className={buttonVariants({ variant: "default", size: "lg" })}
           >
             <span className="text-lg">Chat your {user.matches} Matches</span>

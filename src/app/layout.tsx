@@ -7,6 +7,8 @@ import GameProvider from "@/store/browseContext";
 
 import { getUser } from "@/api/user.api";
 import { getBrowse } from "@/api/browse.api";
+import BottomNavbar from "@/components/BottomNavbar";
+import Navbar from "@/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +26,7 @@ export default async function RootLayout({
   const game = await getBrowse(0);
 
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className="h-full no-scrollbar">
       <body
         className={cn("relative h-full text-sans antialiased", inter.className)}
       >
@@ -32,7 +34,9 @@ export default async function RootLayout({
           <GameProvider browse={game}>
             {
               <main className="relative flex flex-col min-h-screen">
+                <Navbar />
                 <div className="flex-grow flex-1">{children}</div>
+                <BottomNavbar />
               </main>
             }
           </GameProvider>

@@ -124,7 +124,7 @@ const Page = () => {
   };
 
   return (
-    <div className="container relative flex pt-20 flex-col items-center justify-center lg:px-0">
+    <div className="container relative flex pt-8 flex-col items-center justify-center lg:px-0">
       <div className="mx-auto flex w-full flex-col justify-center space-y-2 sm:w-[360px]">
         <div className="flex flex-col items-center text-center">
           <Icons.profileLogo
@@ -141,7 +141,7 @@ const Page = () => {
         <div className="grid gap-6">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="grid gap-2 mb-4">
+              <div className="grid gap-2 mb-14">
                 <FormField
                   control={form.control}
                   name="image"
