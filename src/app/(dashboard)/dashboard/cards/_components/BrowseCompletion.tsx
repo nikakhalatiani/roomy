@@ -1,8 +1,21 @@
+"use client";
 import { buttonVariants } from "@/components/ui/button";
 import { useUserContext } from "@/store/userContext";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
-const BrowseCompletion = () => {
+interface BrowseCompletionProps {
+  sessionID: string;
+  initialMatchesCount: number;
+}
+
+const BrowseCompletion: React.FC<BrowseCompletionProps> = ({
+  sessionID,
+  initialMatchesCount,
+}) => {
+  const [userMatchesCount, setUserMatchesCount] =
+    useState<number>(initialMatchesCount);
+
   const [user, setUser] = useUserContext();
 
   return (
@@ -12,16 +25,24 @@ const BrowseCompletion = () => {
       }
     >
       <div className="flex flex-col items-center justify-center text-center relative z-10">
-        <h1 className="font-bold tracking-tight text-gray-900 sm:text-4xl">
+        <h1 className="font-bold tracking-tight text-gray-900 text-4xl">
           No more <span className="text-rose-600">roomies</span> available{" "}
         </h1>
         <div className="mt-8">
-          <Link
-            href="/dashboard/chats"
-            className={buttonVariants({ variant: "default", size: "lg" })}
-          >
-            <span className="text-lg">Chat your {user.matches} Matches</span>
-          </Link>
+          {userMatchesCount > 0 ? (
+            <Link
+              href="/dashboard/chats"
+              className={buttonVariants({ variant: "default", size: "lg" })}
+            >
+              {userMatchesCount > 1 ? (
+                <span className="text-lg">
+                  Chat your {userMatchesCount} matches
+                </span>
+              ) : (
+                <span className="text-lg">Chat your match</span>
+              )}
+            </Link>
+          ) : null}
         </div>
       </div>
     </div>

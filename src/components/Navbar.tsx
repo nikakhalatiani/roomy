@@ -4,6 +4,7 @@ import { Icons } from "./Icons";
 import { buttonVariants } from "./ui/button";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { LogOut } from "lucide-react";
 
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
@@ -21,7 +22,16 @@ const Navbar = async () => {
               <div className="ml-auto flex items-center">
                 <div className="sm:flex sm:flex-1 sm:items-center sm:justify-end sm:space-x-4">
                   {session ? (
-                    <p></p>
+                    <Link
+                      href="/auth/sign-up"
+                      className={buttonVariants({
+                        variant: "ghost",
+                        className: "text-gray-900 hover:text-rose-600",
+                      })}
+                    >
+                      Log out
+                      <LogOut className="ml-2 h-4 w-4"/>
+                    </Link>
                   ) : (
                     <Link
                       href="/auth/sign-up"

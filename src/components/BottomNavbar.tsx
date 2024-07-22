@@ -2,7 +2,7 @@
 import Link from "next/link";
 import MaxWidthWrapper from "./MaxWidthWrapper";
 import {
-  Home,
+  Heart,
   Compass,
   MessageCircle,
   CircleUserRound,
@@ -19,15 +19,6 @@ const BottomNavbar = () => {
         <div className="border-t border-gray-200">
           <div className="flex h-12 items-center justify-around">
             <Link
-              href="/"
-              className={cn(
-                "flex flex-col items-center transition-colors",
-                "/" === currentPath ? "text-rose-600" : "text-gray-900"
-              )}
-            >
-              <Home className="h-6 w-6" strokeWidth={1.5} />
-            </Link>
-            <Link
               href="/dashboard/filters"
               className={cn(
                 "flex flex-col items-center transition-colors",
@@ -37,6 +28,15 @@ const BottomNavbar = () => {
               )}
             >
               <SlidersHorizontal className="h-6 w-6" strokeWidth={1.5} />
+            </Link>
+            <Link
+              href="/dashboard/matches"
+              className={cn(
+                "flex flex-col items-center transition-colors",
+                "/dashboard/matches" === currentPath ? "text-rose-600" : "text-gray-900"
+              )}
+            >
+              <Heart className="h-6 w-6" strokeWidth={1.5} />
             </Link>
             <Link
               href="/dashboard/cards"
