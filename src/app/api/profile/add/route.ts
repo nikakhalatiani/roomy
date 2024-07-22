@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     }
 
     await db.set(
-      `user:${session.user.id}:personal_info`,
+      `user:personal_info:${session.user.id}`,
       JSON.stringify({
         username,
         dob,
@@ -31,6 +31,7 @@ export async function POST(req: Request) {
         year,
         minor,
         morningPerson,
+        image: `https://roomy-local-kiu.s3.eu-north-1.amazonaws.com/${session.user.id}`,
       })
     );
 

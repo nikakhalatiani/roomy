@@ -1,7 +1,7 @@
 "use client";
 import { Icons } from "@/components/Icons";
 import { Input } from "@/components/ui/input";
-import { format } from "date-fns";
+import { format, set } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -38,6 +38,7 @@ import {
 } from "@/lib/validators/personal-data-validator";
 import axios, { AxiosError } from "axios";
 import { z } from "zod";
+import { getSignedURL } from "@/app/api/profile/getImage/route";
 
 const Page = () => {
   const form = useForm<TPersonalDataValidator>({
@@ -50,6 +51,17 @@ const Page = () => {
   });
 
   const [load, setLoad] = useState<boolean>(false);
+  const [file, setFile] = useState<File | undefined>(undefined);
+
+  const computeSHA256 = async (file: File) => {
+    const buffer = await file.arrayBuffer();
+    const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
+    return hashHex;
+  };
 
   const addProfile = async (data: TPersonalDataValidator) => {
     try {
@@ -68,17 +80,51 @@ const Page = () => {
     }
   };
 
-  const onSubmit = (data: TPersonalDataValidator) => {
-    addProfile(data);
+  const addImage = async () => {
+    try {
+      if (file) {
+        form.setError("root", { message: "Uploading Image" });
+        const checksum = await computeSHA256(file);
+        const signedURLResult = await getSignedURL(
+          file.type,
+          file.size,
+          checksum
+        );
+        if (signedURLResult.failure !== undefined) {
+          throw new Error(signedURLResult.failure);
+        }
+        const imageURL = signedURLResult.success.url;
+
+        await fetch(imageURL, {
+          method: "PUT",
+          body: file,
+          headers: {
+            "Content-Type": file.type,
+          },
+        });
+        form.setError("root", { message: "" });
+      }
+    } catch (error) {
+      form.setError("root", { message: `${error}` });
+      setLoad(false);
+    }
   };
 
-  // Function to set load to false on form field change
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFile(e.target.files?.[0]);
+  };
+
+  const onSubmit = async (data: TPersonalDataValidator) => {
+    addProfile(data);
+    addImage();
+  };
+
   const handleFieldChange = () => {
     setLoad(false);
   };
 
   return (
-    <div className="container relative flex pt-20 flex-col items-center justify-center lg:px-0">
+    <div className="container relative flex pt-8 flex-col items-center justify-center lg:px-0">
       <div className="mx-auto flex w-full flex-col justify-center space-y-2 sm:w-[360px]">
         <div className="flex flex-col items-center text-center">
           <Icons.profileLogo
@@ -89,13 +135,13 @@ const Page = () => {
           />
           <h1 className="text-2xl font-bold">
             Set up your <span className="text-rose-600">own</span> profile to
-            let others know you
+            let others find you
           </h1>
         </div>
         <div className="grid gap-6">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="grid gap-2 mb-4">
+              <div className="grid gap-2 mb-14">
                 <FormField
                   control={form.control}
                   name="image"
@@ -108,10 +154,11 @@ const Page = () => {
                         <Input
                           id="image"
                           type="file"
-                          accept="image/*"
+                          accept="image/jpeg, image/png, image/webp, image/jpg"
                           onChange={(e) => {
-                            field.onChange(e.target.files?.[0] || null);
+                            field.onChange(e.target.files?.[0]);
                             handleFieldChange(); // Call to set load to false
+                            handleFileChange(e);
                           }}
                           className={cn("focus-visible:ring-transparent", {
                             "border-rose-600": form.formState.errors.image,
@@ -145,6 +192,7 @@ const Page = () => {
                           id="username"
                           placeholder="Nikolai Khalatiani"
                           {...field}
+                          value={field.value ?? ""} // Ensure the input is controlled
                           onChange={(e) => {
                             field.onChange(e);
                             handleFieldChange(); // Call to set load to false
@@ -238,7 +286,7 @@ const Page = () => {
                           </FormLabel>
                           <FormControl>
                             <Select
-                              value={field.value}
+                              value={field.value ?? ""}
                               onValueChange={(value) => {
                                 field.onChange(value);
                                 handleFieldChange(); // Call to set load to false
@@ -284,7 +332,7 @@ const Page = () => {
                           </FormLabel>
                           <FormControl>
                             <Select
-                              value={field.value}
+                              value={field.value ?? ""}
                               onValueChange={(value) => {
                                 field.onChange(value);
                                 handleFieldChange(); // Call to set load to false
@@ -330,7 +378,7 @@ const Page = () => {
                           </FormLabel>
                           <FormControl>
                             <Select
-                              value={field.value}
+                              value={field.value ?? ""}
                               onValueChange={(value) => {
                                 field.onChange(value);
                                 handleFieldChange(); // Call to set load to false

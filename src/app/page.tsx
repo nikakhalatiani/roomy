@@ -1,5 +1,4 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import Navbar from "@/components/Navbar";
 import { buttonVariants } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth";
 import { CircleUserRound, SearchCheck, MessageCircle } from "lucide-react";
@@ -27,19 +26,17 @@ export default async function Home() {
   const session = await getServerSession(authOptions);
   return (
     <>
-      <Navbar />
-
       <MaxWidthWrapper>
         <div className="py-20 mx-auto text-center flex flex-col items-center max-w-3xl">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            Welcome to <span className="text-rose-600">roomy</span>!
+            Welcome to <span className="text-rose-600">Roomy</span>!
           </h1>
           <p className="mt-6 text-lg max-w-prose text-muted-foreground">
             Find a roommate who shares your lifestyle{" "}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 mt-6">
             <Link
-              href={session ? "/browse" : "/auth/sign-up"}
+              href={session ? "/dashboard/cards" : "/auth/sign-up"}
               className={buttonVariants({ variant: "default", size: "lg" })}
             >
               <span className="text-lg">Look for People</span>

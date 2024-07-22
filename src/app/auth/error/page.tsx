@@ -13,8 +13,8 @@ const Page = () => {
             <span className="text-rose-600">roomy</span>
           </h1>
           <p className="mt-6 text-lg max-w-prose text-muted-foreground">
-            Try again with your{" "}
-            <span className="text-rose-500">kiu.edu.ge</span> email
+            Use your{" "}
+            <span className="text-rose-500">@kiu.edu.ge</span> email
           </p>
           <div className="flex flex-col sm:flex-row gap-4 mt-6">
             <Link href="/auth/sign-up" className={buttonVariants()}>

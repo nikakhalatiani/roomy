@@ -1,6 +1,6 @@
 import { User } from "@/types/user";
 export const user: User = {
-  matches: 100, // Will change to read from db
+  matches: 0, // Will change to read from db
 };
 
 export const getUser = async (): Promise<User> => {
