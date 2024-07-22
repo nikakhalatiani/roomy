@@ -135,7 +135,7 @@ const Page = () => {
           />
           <h1 className="text-2xl font-bold">
             Set up your <span className="text-rose-600">own</span> profile to
-            let others know you
+            let others find you
           </h1>
         </div>
         <div className="grid gap-6">
